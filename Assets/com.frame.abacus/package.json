@@ -1,14 +1,20 @@
 {
     "name": "com.frame.abacus",
-    "version": "1.0.3",
+    "version": "0.0.1",
     "unity": "2019.4",
-    "displayName": "Abacus",
+    "author": {
+        "name": "onovich",
+        "email": "onovich1110@gmail.com"
+    },
+    "displayName": "MortiseFrame.Abacus",
     "description": "A math library for my own use.",
     "documentationURL": "https://github.com/onovich/Abacus",
     "hideInEditor": false,
     "category": "Math",
     "keywords": [
+        "MortiseFrame",
         "math",
         "2d"
-    ]
+    ],
+    "unityRelease": "16f1"
 }
