@@ -1,0 +1,14 @@
+{
+    "name": "com.frame.abacus",
+    "version": "1.0.3",
+    "unity": "2019.4",
+    "displayName": "Abacus",
+    "description": "A math library for my own use.",
+    "documentationURL": "https://github.com/onovich/Abacus",
+    "hideInEditor": false,
+    "category": "Math",
+    "keywords": [
+        "math",
+        "2d"
+    ]
+}

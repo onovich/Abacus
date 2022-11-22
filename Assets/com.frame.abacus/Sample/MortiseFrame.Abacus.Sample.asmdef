@@ -1,0 +1,18 @@
+{
+    "name": "MortiseFrame.Abacus.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:30581cc8beeab4671b1841a9e53477eb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
