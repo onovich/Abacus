@@ -6,9 +6,9 @@ namespace MortiseFrame.Abacus {
 
     public class QuadTree {
 
-        Memory<QuadNode> all; // saves all nodes state in the QuadTree
+        public Memory<QuadNode> all; // saves all nodes state in the QuadTree
         Dictionary<uint/*id*/, int/*index*/> elements;  // saves all elements's index of the Memory<QuadNode> all
-        Dictionary<ushort /*boundID*/, AABB> bounds;
+        public Dictionary<ushort /*boundID*/, AABB> bounds;
         byte depthLimit; // must be less than 8
         Vector2 worldSize;
         Vector2 cellSize;
@@ -16,6 +16,7 @@ namespace MortiseFrame.Abacus {
         public QuadTree(int capacity, Vector2 worldSize, byte depthLimit) {
             this.depthLimit = Math.Clamp(depthLimit, (byte)1, (byte)7);
             this.all = new Memory<QuadNode>(new QuadNode[capacity]);
+            this.bounds = new Dictionary<ushort, AABB>();
             CaculateCellSize();
             CaculateAllBounds(depthLimit, worldSize);
         }
@@ -29,6 +30,16 @@ namespace MortiseFrame.Abacus {
             for (byte i = 0; i < 4; i++) {
                 if (!InsertWithCell(element, depth, i)) {
                     continue;
+                }
+                if (span[i] == null) {
+                    span[i] = new QuadNode();
+                    span[i].state = 1;
+                    ushort key = i;
+                    key |= (ushort)(depth << 8);
+                    span[i].key = key;
+                    span[i].count += 1;
+                    elements.Add(elementID, offset + i);
+                    return;
                 }
                 switch (span[i].state) {
                     // empty: create new node, tag as leaf, insert into elements
