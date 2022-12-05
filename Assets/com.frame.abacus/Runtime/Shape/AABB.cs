@@ -7,8 +7,10 @@ namespace MortiseFrame.Abacus {
 
         Vector2 min;
         public Vector2 Min => min;
+        public void SetMin(Vector2 value) => min = value;
         Vector2 max;
         public Vector2 Max => max;
+        public void SetMax(Vector2 value) => max = value;
         Vector2 center;
         public Vector2 Center => center;
         Vector2 size;
