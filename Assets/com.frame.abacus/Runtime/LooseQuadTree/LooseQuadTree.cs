@@ -5,6 +5,8 @@ using System.Numerics;
 namespace MortiseFrame.Abacus {
     public interface IBoundable {
         AABB Bounds { get; }
+        Vector2 GetPosition();
+        void SetPosition(Vector2 pos);
     }
     class LooseQuadTree<T> where T : IBoundable {
 
@@ -124,5 +126,90 @@ namespace MortiseFrame.Abacus {
             objects.Clear();
         }
 
+        // 更新对象
+        public void Update(T obj) {
+            // 如果对象不在空间索引的边界内，则不进行更新
+            if (!bounds.Intersects(obj.Bounds)) {
+                return;
+            }
+            // 如果当前节点没有子节点，则直接更新对象
+            if (children == null) {
+                // 更新对象
+                // ...
+
+                // 如果当前节点包含的对象数量超过了松散系数，则把当前节点划分为四个子节点
+                if (objects.Count > looseness) {
+                    Subdivide();
+                }
+            }
+            // 否则，把对象更新到与它相交的子节点中
+            else {
+                foreach (var child in children) {
+                    child.Update(obj);
+                }
+            }
+        }
+
+        // 尝试移动对象
+        public bool TryMove(T obj, Vector2 offset) {
+            // 如果对象不在空间索引的边界内，则不进行移动
+            if (!bounds.Intersects(obj.Bounds)) {
+                return false;
+            }
+            // 计算移动后的对象边界
+            var newBounds = obj.Bounds;
+            newBounds.SetMin(newBounds.Min + offset);
+            newBounds.SetMax(newBounds.Max + offset);
+
+            // 如果当前节点没有子节点，则直接移动对象
+            if (children == null) {
+                // 如果移动后的对象边界还在当前节点的边界内，则移动对象
+                if (bounds.Contains(newBounds.Center)) {
+                    // 移动对象
+                    // 移动对象边界
+                    obj.Bounds.SetMin(obj.Bounds.Min + offset);
+                    obj.Bounds.SetMax(obj.Bounds.Max + offset);
+                    // 移动对象位置
+                    var position = obj.GetPosition();
+                    obj.SetPosition(position + offset);
+                    return true;
+                }
+            }
+            // 否则，把对象移动到与它相交的子节点中
+            else {
+                foreach (var child in children) {
+                    if (child.TryMove(obj, offset)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public void Rebalance() {
+            // 如果当前节点有子节点，则先重新平衡子节点
+            if (children != null) {
+                foreach (var child in children) {
+                    child.Rebalance();
+                }
+            }
+            // 如果当前节点包含的对象数量小于等于松散系数，则删除子节点
+            if (objects.Count <= looseness) {
+                // 把子节点中的对象合并到当前节点
+                if (children != null) {
+                    foreach (var child in children) {
+                        objects.AddRange(child.objects);
+                    }
+                    children = null;
+                }
+            }
+            // 否则，如果当前节点没有子节点，则把当前节点划分为四个子节点
+            else if (children == null) {
+                Subdivide();
+            }
+        }
+
     }
+
 }
