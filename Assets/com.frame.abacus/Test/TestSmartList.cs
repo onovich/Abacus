@@ -165,56 +165,5 @@ namespace MortiseFrame.Abacus.Test {
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void MoveNext_ShouldMoveToNextElement() {
-            // Arrange
-            var list = new SmartList<int>(10);
-            list.Add(5);
-            list.Add(10);
-            list.Add(15);
-            // Act
-            list.Reset();
-            Assert.IsTrue(list.MoveNext());
-            Assert.AreEqual(5, list.Current);
-            Assert.IsTrue(list.MoveNext());
-            Assert.AreEqual(10, list.Current);
-            Assert.IsTrue(list.MoveNext());
-            Assert.AreEqual(15, list.Current);
-            Assert.IsFalse(list.MoveNext());
-            Assert.AreEqual(15, list.Current);
-        }
-
-        [Test]
-        public void Reset_ShouldResetEnumerator() {
-            // Arrange
-            var list = new SmartList<int>(10);
-            list.Add(5);
-            list.Add(10);
-            list.Add(15);
-
-            // Act
-            list.Reset();
-            Assert.AreEqual(-1, list.currentIndex);
-
-        }
-
-        [Test]
-        public void Current_ShouldReturnCurrentElement() {
-            // Arrange
-            var list = new SmartList<int>(10);
-            list.Add(5);
-            list.Add(10);
-            list.Add(15);
-
-            // Act & Assert
-            list.Reset();
-            Assert.AreEqual(5, list.Current);
-            list.MoveNext();
-            Assert.AreEqual(10, list.Current);
-            list.MoveNext();
-            Assert.AreEqual(15, list.Current);
-
-        }
-
     }
 }

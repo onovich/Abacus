@@ -20,7 +20,6 @@ namespace MortiseFrame.Abacus {
         Type type;
         int capacity;
         public int Length { get; private set; }
-        public int currentIndex = -1;
 
         public SmartListPool(int capacity) {
             this.capacity = capacity;
@@ -54,38 +53,15 @@ namespace MortiseFrame.Abacus {
         }
 
         public int RemoveAll(Predicate<T> match) {
-            if (match == null) {
-                throw new ArgumentNullException("match");
-            }
-
-            int freeIndex = 0;   // the first free slot in items array
-
-            // Find the first item which needs to be removed.
-            while (freeIndex < Length && !match(currentBlock.Memory.Span[freeIndex])) {
-                freeIndex++;
-            }
-
-            if (freeIndex >= Length) {
-                return 0;
-            }
-
-            int current = freeIndex + 1;
-            while (current < Length) {
-                // Find the first item which needs to be kept.
-                while (current < Length && match(currentBlock.Memory.Span[current])) {
-                    current++;
-                }
-
-                if (current < Length) {
-                    // copy item to the free slot.
-                    currentBlock.Memory.Span[freeIndex++] = currentBlock.Memory.Span[current++];
+            int count = 0;
+            for (int i = 0; i < Length; i++) {
+                if (match(currentBlock.Memory.Span[i])) {
+                    RemoveAt(i);
+                    count++;
+                    i--;
                 }
             }
-
-            currentBlock.Memory.Span.Slice(freeIndex, Length - freeIndex).Clear();
-            int result = Length - freeIndex;
-            Length = freeIndex;
-            return result;
+            return count;
         }
 
         public bool Contains(T value) {
@@ -104,6 +80,7 @@ namespace MortiseFrame.Abacus {
                     (currentBlock.Memory.Span[i] as IDisposable)?.Dispose();
                 }
                 currentBlock.Memory.Span[i] = default(T);
+
             }
             Length = 0;
             capacity = 0;
@@ -123,6 +100,7 @@ namespace MortiseFrame.Abacus {
         }
 
         private void QuickSort(Span<T> list, int left, int right, IComparer<T> comparer) {
+            if (comparer == null) comparer = Comparer<T>.Default;
             if (left >= right) return;
 
             int pivotIndex = Partition(list, left, right, comparer);
@@ -158,32 +136,6 @@ namespace MortiseFrame.Abacus {
             for (int i = 0; i < Length; i++) {
                 action(currentBlock.Memory.Span[i]);
             }
-        }
-
-        public T Current {
-            get {
-                if (currentIndex < 0 || currentIndex >= Length) {
-                    throw new InvalidOperationException();
-                }
-
-                return currentBlock.Memory.Span[currentIndex];
-            }
-        }
-        public void Reset() {
-            currentIndex = -1;
-        }
-
-        public bool MoveNext() {
-            // 如果枚举器的当前位置已经到达列表末尾，则返回false
-            if (currentIndex == Length - 1) {
-                return false;
-            }
-
-            // 将枚举器的当前位置向后移动一位
-            currentIndex++;
-
-            // 返回true，表示枚举器已经移动到了下一个位置
-            return true;
         }
 
         public void Insert(int index, T value) {

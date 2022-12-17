@@ -10,3 +10,4 @@ omnisharp.json
 MortiseFrame.Abacus.csproj
 Assembly-CSharp.csproj
 obj
+Tests.csproj

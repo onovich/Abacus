@@ -41,8 +41,10 @@ namespace MortiseFrame.Abacus {
                 var newData = new T[capacity];
                 data.Span.CopyTo(newData);
                 data = newData;
-
             }
+            // 添加元素并更新长度
+            data.Span[Length++] = value;
+
         }
         public void RemoveAt(int index) {
             // 移动元素
@@ -82,6 +84,7 @@ namespace MortiseFrame.Abacus {
                 if (match(data.Span[i])) {
                     RemoveAt(i);
                     count++;
+                    i--;
                 }
             }
             return count;
@@ -93,25 +96,6 @@ namespace MortiseFrame.Abacus {
             }
         }
 
-        public T Current => data.Span[currentIndex];
-
-        public void Reset() {
-            currentIndex = -1;
-        }
-
-        public bool MoveNext() {
-            // 如果枚举器的当前位置已经到达列表末尾，则返回false
-            if (currentIndex == data.Length - 1) {
-                return false;
-            }
-
-            // 将枚举器的当前位置向后移动一位
-            currentIndex++;
-
-            // 返回true，表示枚举器已经移动到了下一个位置
-            return true;
-        }
-
         public void Sort() {
             QuickSort(data.Span, 0, Length - 1, null);
         }
@@ -121,6 +105,7 @@ namespace MortiseFrame.Abacus {
 
         // 快速排序
         public void QuickSort(Span<T> list, int left, int right, IComparer<T> comparer) {
+            if (comparer == null) comparer = Comparer<T>.Default;
             if (left >= right) return;
 
             int pivotIndex = Partition(list, left, right, comparer);
