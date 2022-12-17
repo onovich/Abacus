@@ -11,3 +11,4 @@ MortiseFrame.Abacus.csproj
 Assembly-CSharp.csproj
 obj
 Tests.csproj
+MortiseFrame.Abacus.Sample.csproj

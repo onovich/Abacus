@@ -76,6 +76,16 @@ namespace MortiseFrame.Abacus {
             }
             return false;
         }
+
+        public void Remove(T value) {
+            for (int i = 0; i < Length; i++) {
+                if (data.Span[i].Equals(value)) {
+                    RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
         public int RemoveAll(Predicate<T> match) {
             int count = 0;
             for (int i = 0; i < Length; i++) {

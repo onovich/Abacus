@@ -40,6 +40,15 @@ namespace MortiseFrame.Abacus {
             currentBlock.Memory.Span[Length++] = value;
         }
 
+        public void Remove(T value) {
+            for (int i = 0; i < Length; i++) {
+                if (currentBlock.Memory.Span[i].Equals(value)) {
+                    RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
         public void RemoveAt(int index) {
             // 移动元素
             for (int i = index; i < Length - 1; i++) {
