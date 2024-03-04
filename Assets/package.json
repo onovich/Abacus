@@ -1,0 +1,19 @@
+{
+    "name": "com.mortise.abacus",
+    "version": "0.0.0",
+    "unity": "2019.4",
+    "author": {
+        "name": "onovich",
+        "email": "onovich1110@gmail.com"
+    },
+    "displayName": "MortiseFrame.Abacus",
+    "description": "A lightweight fundamental math library.",
+    "documentationURL": "https://github.com/onovich/Abacus",
+    "hideInEditor": false,
+    "category": "Math",
+    "keywords": [
+        "MortiseFrame",
+        "math"
+    ],
+    "unityRelease": "16f1"
+}
