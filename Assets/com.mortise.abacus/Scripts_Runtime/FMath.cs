@@ -2,7 +2,7 @@ using System;
 
 namespace MortiseFrame.Abacus {
 
-    public static class Mathf {
+    public static class FMath {
         public const float PI = 3.1415927F;
         public const float Infinity = float.PositiveInfinity;
         public const float NegativeInfinity = float.NegativeInfinity;
