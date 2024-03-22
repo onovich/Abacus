@@ -8,7 +8,7 @@ namespace MortiseFrame.Abacus {
         FVector2 max;
         public FVector2 Max => max;
 
-        public FBounds(FVector2 center, FVector2 size) {
+        public Bounds(FVector2 center, FVector2 size) {
             min = center - size / 2;
             max = center + size / 2;
         }
