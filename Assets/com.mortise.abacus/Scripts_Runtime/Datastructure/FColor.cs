@@ -46,16 +46,6 @@ namespace MortiseFrame.Abacus {
         public static readonly FColor blue = new FColor(0f, 0f, 1f, 1f);
         public static readonly FColor green = new FColor(0f, 1f, 0f, 1f);
 
-        public static FColor Lerp(FColor a, FColor b, float t) {
-            t = Math.Clamp(t, 0f, 1f);
-            return new FColor(
-                a.r + (b.r - a.r) * t,
-                a.g + (b.g - a.g) * t,
-                a.b + (b.b - a.b) * t,
-                a.a + (b.a - a.a) * t
-            );
-        }
-
         public static FColor HSVToRGB(float H, float S, float V, bool hdr = false) {
             if (S == 0f) {
                 return new FColor(V, V, V, 1f);

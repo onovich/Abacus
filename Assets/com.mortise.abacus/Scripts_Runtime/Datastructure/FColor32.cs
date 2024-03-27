@@ -56,13 +56,6 @@ namespace MortiseFrame.Abacus {
 
         public static implicit operator FColor32(FColor c) => new FColor32((byte)Math.Round(c.r * 255), (byte)Math.Round(c.g * 255), (byte)Math.Round(c.b * 255), (byte)Math.Round(c.a * 255));
 
-        public static FColor32 Lerp(FColor32 a, FColor32 b, float t) {
-            t = Math.Clamp(t, 0f, 1f);
-            return (FColor32)FColor.Lerp(a, b, t);
-        }
-
-        public static FColor32 LerpUnclamped(FColor32 a, FColor32 b, float t) {
-            return (FColor32)FColor.Lerp(a, b, t);
-        }
     }
+
 }
