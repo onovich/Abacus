@@ -16,7 +16,7 @@ namespace MortiseFrame.Abacus {
             m30 = row4.x; m31 = row4.y; m32 = row4.z; m33 = row4.w;
         }
 
-        public static FVector4 MultiplyVector(FMatrix4x4 m, FVector4 v) {
+        public static FVector4 operator *(FMatrix4x4 m, FVector4 v) {
             return new FVector4(
                 m.m00 * v.x + m.m01 * v.y + m.m02 * v.z + m.m03 * v.w,
                 m.m10 * v.x + m.m11 * v.y + m.m12 * v.z + m.m13 * v.w,
@@ -25,7 +25,7 @@ namespace MortiseFrame.Abacus {
             );
         }
 
-        public static FMatrix4x4 Multiply(FMatrix4x4 a, FMatrix4x4 b) {
+        public static FMatrix4x4 operator *(FMatrix4x4 a, FMatrix4x4 b) {
             FMatrix4x4 result = new FMatrix4x4();
             for (int row = 0; row < 4; row++) {
                 for (int col = 0; col < 4; col++) {
